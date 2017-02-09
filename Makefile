@@ -1,0 +1,95 @@
+#Executaveis
+PLAY=play
+PLAY_DEPENDENCIES=$(WINDOW) $(RECTANGLE) $(IMAGE) $(TEXT) $(BUTTON)
+
+
+
+
+#Arquivos
+INCLUDES=Includes
+WINDOW=Window
+ANIMATION=Animation
+IMAGE=Image
+MAIN=Main
+#PLAYER=Player
+RECTANGLE=Rectangle
+BUTTON=Button
+TEXT=Text
+TEXT_BOX=TextBox
+
+#Pastas
+SOURCE_FOLDER=src
+
+#Compilador
+CC=g++
+
+#Linkers
+LINKERS=-lSDL2 -lSDL2_ttf -lSDL2_image
+
+#Executor
+EXECUTE=./
+
+#Otimizador
+OPTIMIZE=-o3
+
+#Opções
+#USE_ANSI=-ansi
+USE_ANSI=-std=c++11
+#LIKE_A_LIBRARY=-c
+LIKE_A_LIBRARY=-c
+LIKE_A_EXECUTABLE=-o
+
+#Comandos
+OPEN_FOLDER=cd
+REMOVE=rm
+DEBUGGER=valgrind
+
+
+################################################EXECUTABLES COMPILATION
+
+all: $(PLAY_DEPENDENCIES)
+	$(OPEN_FOLDER) $(SOURCE_FOLDER); $(CC) $(USE_ANSI) $(MAIN:=.cpp) $(PLAY_DEPENDENCIES:=.o) $(OPTIMIZE) $(LIKE_A_EXECUTABLE) ../$(PLAY) $(LINKERS)
+# all: $(PLAY_DEPENDENCIES)
+# 	$(OPEN_FOLDER) $(SOURCE_FOLDER); $(CC) $(USE_ANSI) $(MAIN:=.cpp) $(PLAY_DEPENDENCIES:=.o) $(OPTIMIZE) $(LIKE_A_EXECUTABLE) ../$(PLAY) $(LINKERS)
+# 	$(OPEN_FOLDER) $(SOURCE_FOLDER); $(REMOVE) $(PLAY_DEPENDENCIES:=.o)
+
+
+
+##############################################LIBRARIES COMPILATION
+#$(SCREEN:=.o):
+# $(SCREEN):
+# 	$(OPEN_FOLDER) $(SOURCE_FOLDER); $(CC) $(LIKE_A_LIBRARY) $(USE_ANSI) $(SCREEN)/$(SCREEN:=.cpp)
+
+
+#$(RECTANGLE:=.o):
+$(RECTANGLE): $(WINDOW)
+	$(OPEN_FOLDER) $(SOURCE_FOLDER); $(CC) $(LIKE_A_LIBRARY) $(USE_ANSI) $(RECTANGLE)/$(RECTANGLE:=.cpp)
+
+
+$(TEXT): $(WINDOW)
+	$(OPEN_FOLDER) $(SOURCE_FOLDER); $(CC) $(LIKE_A_LIBRARY) $(USE_ANSI) $(TEXT)/$(TEXT:=.cpp)
+
+$(BUTTON): $(WINDOW) $(TEXT) $(RECTANGLE)
+	$(OPEN_FOLDER) $(SOURCE_FOLDER); $(CC) $(LIKE_A_LIBRARY) $(USE_ANSI) $(BUTTON)/$(BUTTON:=.cpp)
+	
+$(IMAGE): $(WINDOW)
+	$(OPEN_FOLDER) $(SOURCE_FOLDER); $(CC) $(LIKE_A_LIBRARY) $(USE_ANSI) $(IMAGE)/$(IMAGE:=.cpp)
+
+# $(ANIMATION): $(SCREEN) $(IMAGE)
+# 	$(OPEN_FOLDER) $(SOURCE_FOLDER); $(CC) $(LIKE_A_LIBRARY) $(USE_ANSI) $(ANIMATION)/$(ANIMATION:=.cpp)
+
+$(WINDOW):
+	$(OPEN_FOLDER) $(SOURCE_FOLDER); $(CC) $(LIKE_A_LIBRARY) $(USE_ANSI) $(WINDOW)/$(WINDOW:=.cpp)
+
+#Run
+run:
+	$(EXECUTE)$(PLAY)
+
+#Debug
+debug:
+	$(DEBUGGER) $(EXECUTE)$(PLAY)
+
+#Clean
+clean:
+	rm ./*.o
+	$(OPEN_FOLDER) $(SOURCE_FOLDER); $(REMOVE) *.o
