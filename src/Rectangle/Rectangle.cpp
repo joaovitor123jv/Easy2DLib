@@ -45,18 +45,9 @@ int Rectangle::getHeight(){ return this->position.h; }
 
 bool Rectangle::getClicked(Window* window)
 {
-	int x, y;
 	if(window->getMouseClick())
 	{
-		window->getCursorPosition(&x, &y);
-		if(x <= this->position.x + this->position.w  && x >= this->position.x)
-		{
-			if(y <= this->position.y + this->position.h && y >= this->position.y)
-			{
-				return true;
-			}
-			return false;
-		}
+		return this->getCursorInside(window);
 	}
 	return false;
 }
@@ -65,6 +56,29 @@ bool Rectangle::getReleased(Window* window)
 {
 	if(window->getMouseRelease())
 		return true;
+}
+
+bool Rectangle::getMouseInside(Window* window)
+{
+	return this->getCursorInside(window);
+}
+
+bool Rectangle::getCursorInside(Window* window)
+{
+	int x, y;
+	window->getCursorPosition(&x, &y);
+	if(x <= (this->position.x+this->position.w) && x >= this->position.x)
+	{
+		if(y <= (this->position.y + this->position.h) && y>= this->position.y)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	else {return false;}
 }
 
 //Setters

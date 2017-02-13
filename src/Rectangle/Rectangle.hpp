@@ -25,6 +25,8 @@ public:
 	int getHeight();
 	bool getClicked(Window* window); //If clicked, returns true
 	bool getReleased(Window* window); // If mouse button is released, return true
+	bool getCursorInside(Window* window);//Return true if cursor position is behind x and x+width, and y and y+height
+	bool getMouseInside(Window* window);//Another name to "getMouseInside(Window* window);"
 
 
 	//Setters
@@ -37,6 +39,7 @@ public:
 	void setLogs(bool showLogs);
 	void setColor(SDL_Color color);
 	void setColor(int r, int g, int b);
+
 
 	//Commands
 	void print(Window *window);

@@ -62,6 +62,15 @@ void Text::getValuesFromSurface(SDL_Surface* surface)
 	return;
 }
 
+bool Text::getWindowDefined()
+{
+	if(this->window == NULL)
+	{
+		return false;
+	}
+	return true;
+}
+
 //Setters
 void Text::setDefaultValues()
 {

@@ -108,6 +108,7 @@ void Button::setClickColor(SDL_Color color)
 
 
 //Commands
+
 bool Button::listener()
 {
 	if(this->window == NULL)
@@ -119,40 +120,34 @@ bool Button::listener()
 		}
 		return false;
 	}
-	int x, y;
-	this->window->getCursorPosition(&x,&y);
-	if(x < this->rectangle.getX())
+	if(this->rectangle.getCursorInside(this->window))
+	{
+		if(this->window->getMouseButtonDown())
+		{
+			this->setClickColor();
+			return true;
+		}
+		else
+		{
+			this->setInsideColor();
+			return false;
+		}
+	}
+	else
 	{
 		this->setOutsideColor();
 		return false;
-	}
-	if(x > this->rectangle.getX()+this->rectangle.getWidth())
-	{
-		this->setOutsideColor();
-		return false;
-	}
-	if(y < this->rectangle.getY())
-	{
-		this->setOutsideColor();
-		return false;
-	}
-	if(y > this->rectangle.getY()+this->rectangle.getHeight())
-	{
-		this->setOutsideColor();
-		return false;
-	}
-	if(!this->window->getMouseButtonDown())
-	{
-		this->setInsideColor();
-		return false;
-	}
-	if(this->window->getMouseButtonDown())
-	{
-		this->setClickColor();
-		return true;
 	}
 	return false;
 }
+
+
+
+
+
+
+
+
 
 void Button::print()
 {

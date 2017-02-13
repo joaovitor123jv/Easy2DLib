@@ -66,6 +66,7 @@ public:
 	SDL_Keycode getKey();
 	SDL_Renderer* getRenderer();
 	SDL_Window* getWindow();
+	SDL_Event getRawEvent();
 
 	//Commands
 	bool upgrade();

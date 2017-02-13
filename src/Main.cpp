@@ -5,6 +5,7 @@
 #include "Image/Image.hpp"
 #include "Text/Text.hpp"
 #include "Button/Button.hpp"
+#include "TextBox/TextBox.hpp"
 #include <math.h>
 
 using namespace std;
@@ -69,6 +70,12 @@ int main()
 	btSair.setText("Sair");
 	btSair.setPosition(300, 300);
 
+	TextBox txBx = TextBox();
+	txBx.setLogs(true);
+	txBx.setSize(300, 50);
+	txBx.setPosition(200, 100);
+	txBx.setColor(255, 255, 255);
+	txBx.setTextColor(0,0,0);
 
 
 	velX = 4;
@@ -91,6 +98,9 @@ int main()
 			{
 				flag = true;
 			}
+
+			txBx.listener(&tela);
+
 			close = btSair.listener();
 		}
 
@@ -106,7 +116,7 @@ int main()
 		r++;
 		tela.setDrawColor({(Uint8)r, (Uint8)g, (Uint8)b});
 
-		SDL_Delay(30);
+//		SDL_Delay(30);
 		if(flag)
 			updateRectanglePosition(&rect);
 
@@ -115,6 +125,7 @@ int main()
 
 		rect.printFilled(&tela);
 		text.print();
+		txBx.print(&tela);
 		btSair.print();
 		tela.update();
 	}

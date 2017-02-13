@@ -392,3 +392,8 @@ SDL_Window* Window::getWindow()
 {
 	return this->window;
 }
+
+SDL_Event Window::getRawEvent()
+{
+	return this->event;
+}
