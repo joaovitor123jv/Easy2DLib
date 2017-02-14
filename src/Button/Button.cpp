@@ -90,6 +90,11 @@ void Button::setClickColor(int r, int g, int b)
 	this->clickColor.b = b;
 }
 
+void Button::setTextColor(int r, int g, int b)
+{
+	this->text.setColor({ (Uint8)r, (Uint8)g, (Uint8)b});
+}
+
 void Button::setOutsideColor(SDL_Color color)
 {
 	this->outsideColor = color;
@@ -103,6 +108,11 @@ void Button::setInsideColor(SDL_Color color)
 void Button::setClickColor(SDL_Color color)
 {
 	this->clickColor = color;
+}
+
+void Button::setTextColor(SDL_Color color)
+{
+	this->text.setColor(color);
 }
 
 
@@ -122,7 +132,7 @@ bool Button::listener()
 	}
 	if(this->rectangle.getCursorInside(this->window))
 	{
-		if(this->window->getMouseButtonDown())
+		if(this->window->getMouseClick())
 		{
 			this->setClickColor();
 			return true;

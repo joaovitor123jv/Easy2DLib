@@ -17,6 +17,7 @@ class Window
 	bool showLogs;
 	bool autoUpdate;
 	bool fullScreen;
+	bool click;
 	SDL_Color color;
 
 
@@ -44,6 +45,7 @@ public:
 	bool setLogs(bool showLogs);
 	bool setFullScreen(bool fullScreen);
 	void setDefaultRenderColor();
+	void setResizable(bool resizable);//If true, the window will be resizable
 
 	//Getters
 	unsigned int getWidth();
@@ -69,6 +71,7 @@ public:
 	SDL_Event getRawEvent();
 
 	//Commands
-	bool upgrade();
-	bool update();
+	bool upgrade();//Reset Window, destroy the old, create a new window, renderer and other things
+	bool update();//Clear screen and render present things
+	bool render();//Render the present screen, but not clear it before
 };

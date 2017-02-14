@@ -35,10 +35,12 @@ public:
 	void setInsideColor(int r, int g, int b);
 	void setOutsideColor(int r, int g, int b);
 	void setClickColor(int r, int g, int b);
+	void setTextColor(int r, int g, int b);
 
 	void setInsideColor(SDL_Color color);
 	void setOutsideColor(SDL_Color color);
 	void setClickColor(SDL_Color color);
+	void setTextColor(SDL_Color color);
 
 	//Commands
 	bool listener();

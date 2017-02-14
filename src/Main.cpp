@@ -10,54 +10,21 @@
 
 using namespace std;
 
-int aceleration;
-int velX, velY;
-
-
-void updateRectanglePosition(Rectangle* rectangle)
-{
-	int x = rectangle->getX();
-	int y = rectangle->getY();
-
-	velY = velY + aceleration;
-
-	rectangle->setPosition(x+velX, velY+y);
-
-	if(x+velX >= 600-100 || x + velX <= 0)
-	{
-		velX = velX * -1;
-	}
-	if((y+ velY >= 400-50  && velY>=0 ) || (y + velY <= 0    &&  velY <=0))
-	{
-		velY = velY * -1;
-	}
-	if((y+velY >= 400-50) && velY >=0)
-	{
-		velY +=25;
-	}
-}
-
-
-
 
 int main()
 {
 	bool close = false;
-	bool flag = false;
+
 	Window tela("Tela de Teste", 600, 400);
 	tela.setDrawColor({150,150,255,255});
 
-	Rectangle rect(100,50);
-	rect.setPosition((tela.getWidth()-rect.getWidth())/2, 50);
-	rect.setColor(255,120,90);
+	tela.setResizable(true);
 
 	Image image = Image();
 	image.load(&tela);
 
-	int r=40, g=70, b=120;
 
 	Text text = Text();
-	text.setLogs(true);
 	text.setWindow(&tela);
 	text.setFontSize(40);
 	text.setColor({255, 255, 255});
@@ -69,63 +36,46 @@ int main()
 	btSair.setWindow(&tela);
 	btSair.setText("Sair");
 	btSair.setPosition(300, 300);
+	btSair.setOutsideColor(52, 73, 94);
+	btSair.setInsideColor(44, 62, 80);
+	btSair.setClickColor(127, 140, 141);
+	btSair.setTextColor(250,250,250);
 
 	TextBox txBx = TextBox();
-	txBx.setLogs(true);
 	txBx.setSize(300, 50);
 	txBx.setPosition(200, 100);
 	txBx.setColor(255, 255, 255);
 	txBx.setTextColor(0,0,0);
 
+	TextBox tbGeral = TextBox();
+	tbGeral.setSize(400, 50);
+	tbGeral.setPosition(100, 10);
+	tbGeral.setColor(244, 244, 244);
+	tbGeral.setTextColor(3, 3, 3);
 
-	velX = 4;
-	velY = 2;
-
-	aceleration = 1;
-	flag = true;
 
 	while(!close)
 	{
 		while(tela.getEvent())
 		{
 			close = tela.getClose();
-			if(rect.getClicked(&tela) || !flag)
-			{
-				rect.setPosition(tela.getCursorXPosition(), tela.getCursorYPosition());
-				flag = false;
-			}
-			if(rect.getReleased(&tela) && !flag)
-			{
-				flag = true;
-			}
+		
 
 			txBx.listener(&tela);
+			tbGeral.listener(&tela);
 
 			close = btSair.listener();
 		}
 
-		if(r >= 255)
-			r = 0;
-		if(g >= 255)
-			g=0;
-		if(b >=255)
-			b=0;
 
-		b++;
-		g++;
-		r++;
-		tela.setDrawColor({(Uint8)r, (Uint8)g, (Uint8)b});
-
-//		SDL_Delay(30);
-		if(flag)
-			updateRectanglePosition(&rect);
+		SDL_Delay(30);
 
 
 		image.print(&tela);
 
-		rect.printFilled(&tela);
 		text.print();
 		txBx.print(&tela);
+		tbGeral.print(&tela);
 		btSair.print();
 		tela.update();
 	}

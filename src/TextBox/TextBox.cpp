@@ -209,19 +209,23 @@ void TextBox::print(Window* window)
 }
 
 
+
+
 bool TextBox::listener(Window* window)
 {
-	if(window->getMouseButtonDown()) // IMPROVE THIS CODE!!!
+	if(window->getMouseClick()) // IMPROVE THIS CODE!!!
 	{
 		if(this->rectangle.getCursorInside(window))
 		{
 			this->editingText = true;
-			return true;
+			//return true;
 		}	
 		else
 		{
 			SDL_StopTextInput();// POSSIBLE ERROR HERE
 			this->editingText =  false;
+			cout<<"SDL_StopTextInput"<<endl;
+			return false;
 			//TODO
 		}
 	}
@@ -237,31 +241,30 @@ bool TextBox::listener(Window* window)
 				this->inputText.pop_back();
 				this->textEdited = true;
 				if(this->showLogs)
-		{
-			cout<<"At: TextBox ->  Backspace identified"<<endl;
-		}
+				{
+					cout<<"At: TextBox ->  Backspace identified"<<endl;
+				}
 			}
 			else
 			{
 				if(window->getKey() == SDLK_RETURN)
 				{
 					if(this->showLogs)
-		{
-			cout<<"At: TextBox ->  Return Identified"<<endl;
-		}
+					{
+						cout<<"At: TextBox ->  Return Identified"<<endl;
+					}
 					return true;
 				}
 			}
-			return false;
 		}
 		else
 		{
 			if(window->getRawEvent().type == SDL_TEXTINPUT)
 			{
 				if(this->showLogs)
-		{
-			cout<<"At: TextBox ->  TextInput Identified"<<endl;
-		}
+				{
+					cout<<"At: TextBox ->  TextInput Identified"<<endl;
+				}
 				if(!(SDL_GetModState() & KMOD_CTRL))
 				{
 					this->inputText += window->getRawEvent().text.text;
@@ -269,30 +272,31 @@ bool TextBox::listener(Window* window)
 				}
 			}
 		}
-	}
 
-	if(this->textEdited)
-	{
-		if(this->showLogs)
-		{
-			cout<<"At: TextBox ->  Updating Text"<<endl;
-		}
 
-		if(!this->text.getWindowDefined())
-		{			
-			this->text.setWindow(window);
-		}
-		if(this->inputText != "")
+		if(this->textEdited)
 		{
-			this->text.setText(this->inputText);
-			this->text.update();	
+			if(this->showLogs)
+			{
+				cout<<"At: TextBox ->  Updating Text"<<endl;
+			}
+
+			if(!this->text.getWindowDefined())
+			{			
+				this->text.setWindow(window);
+			}
+			if(this->inputText != "")
+			{
+				this->text.setText(this->inputText);
+				this->text.update();	
+			}
+			else
+			{
+				this->text.setText(" ");
+				this->text.update();
+			}
+			this->textEdited = false;
 		}
-		else
-		{
-			this->text.setText(" ");
-			this->text.update();
-		}
-		this->textEdited = false;
 	}
 	return false;
 }

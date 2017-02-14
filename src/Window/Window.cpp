@@ -150,7 +150,7 @@ bool Window::upgrade()
 	{
 		if(this->showLogs)
 		{
-			cout<<"On: Screen upgrade"<<endl;
+			cout<<"On: Window upgrade"<<endl;
 			cout<<"\tFailed to create renderer"<<endl;
 		}
 		SDL_DestroyWindow(this->window);
@@ -166,13 +166,28 @@ bool Window::update()
 	{
 		if(this->showLogs)
 		{
-			cout<<"On: Screen update"<<endl;
+			cout<<"On: Window update"<<endl;
 			cout<<"\tERROR: Window doesn't exists"<<endl;
 		}
 		return false;
 	}
 	SDL_RenderPresent(this->renderer);
 	SDL_RenderClear(this->renderer);
+	return true;
+}
+
+bool Window::render()
+{
+	if(this->window == NULL)
+	{
+		if(this->showLogs)
+		{
+			cout<<"At: Window render"<<endl;
+			cout<<"\tERROR: Window doesn't wxists"<<endl;
+		}
+		return false;
+	}
+	SDL_RenderPresent(this->renderer);
 	return true;
 }
 
@@ -191,12 +206,28 @@ void Window::setDefaultValues()
 	this->showDecoration = true;
 	this->showWindow = false;
 	this->setLogs(false);
+	this->click = false;
 }
 
 void Window::setDefaultRenderColor()
 {
 	this->setDrawColor(this->color);
 }
+
+
+void Window::setResizable(bool resizable)
+{
+	if(resizable)
+	{
+		SDL_SetWindowResizable(this->window, SDL_TRUE);	
+	}
+	else
+	{
+		SDL_SetWindowResizable(this->window, SDL_FALSE);		
+	}
+	return;
+}
+
 
 bool Window::setSize(unsigned int width, unsigned int height)
 {
@@ -334,6 +365,7 @@ bool Window::getEvent()
 	}
 	else if(this->event.type == SDL_MOUSEBUTTONUP)
 	{
+		this->click = false;
 		if(this->showLogs)
 		{
 			cout<<"Event: Mouse Button Up"<<endl;
@@ -363,7 +395,12 @@ bool Window::getMouseButtonUp()
 
 bool Window::getMouseClick()
 {
-	return this->mouseButtonDown;
+	if(this->mouseButtonDown && !this->click)
+	{
+		this->click = true;
+		return true;
+	}
+	return false;
 }
 
 bool Window::getMouseRelease()

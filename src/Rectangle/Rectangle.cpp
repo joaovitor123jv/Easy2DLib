@@ -47,7 +47,11 @@ bool Rectangle::getClicked(Window* window)
 {
 	if(window->getMouseClick())
 	{
-		return this->getCursorInside(window);
+		if(this->getCursorInside(window))
+		{
+			return true;
+		}
+		return false;
 	}
 	return false;
 }
