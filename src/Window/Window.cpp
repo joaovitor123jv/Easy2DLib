@@ -4,6 +4,8 @@
 #include <string>
 using namespace std;
 
+
+
 //Constructors
 Window::Window(void)
 {
@@ -207,6 +209,7 @@ void Window::setDefaultValues()
 	this->showWindow = false;
 	this->setLogs(false);
 	this->click = false;
+	// this->textInputEnabled = false;
 }
 
 void Window::setDefaultRenderColor()
@@ -282,6 +285,8 @@ bool Window::setDecoration(bool showDecoration)
 	}
 }
 
+bool Window::setBorderLess(bool showDecoration) {this->setDecoration(!showDecoration); }//Only a easifier
+
 bool Window::setTitle(std::string title) 
 {
 	this->title = title; 
@@ -353,6 +358,7 @@ bool Window::getEvent()
 		{
 			cout<<"Event: Mouse Motion"<<endl;
 		}
+		this->click = false;
 		SDL_GetMouseState(&this->cursor.x, &this->cursor.y);//This way, improve many buttons on screen
 	}
 	else if(this->event.type == SDL_MOUSEBUTTONDOWN)
@@ -362,15 +368,16 @@ bool Window::getEvent()
 			cout<<"Event: Mouse Button Down"<<endl;
 		}
 		this->mouseButtonDown = true;
+		this->click = true;
 	}
 	else if(this->event.type == SDL_MOUSEBUTTONUP)
 	{
-		this->click = false;
 		if(this->showLogs)
 		{
 			cout<<"Event: Mouse Button Up"<<endl;
 		}
 		this->mouseButtonDown = false;
+		this->click = false;
 	}
 	return true;
 }
@@ -395,9 +402,8 @@ bool Window::getMouseButtonUp()
 
 bool Window::getMouseClick()
 {
-	if(this->mouseButtonDown && !this->click)
+	if(this->mouseButtonDown && this->click)
 	{
-		this->click = true;
 		return true;
 	}
 	return false;

@@ -22,6 +22,7 @@ SOURCE_FOLDER=src
 
 #Compilador
 CC=g++
+#CC=gcc
 
 #Linkers
 LINKERS=-lSDL2 -lSDL2_ttf -lSDL2_image

@@ -20,8 +20,9 @@ private:
 	void setOutsideColor();
 	void setClickColor();
 public:
-	//Constructor
+	//Constructors
 	Button();
+	Button(std::string text);
 	//Destructor
 	~Button();
 

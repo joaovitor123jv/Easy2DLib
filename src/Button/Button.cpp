@@ -6,6 +6,12 @@ Button::Button()
 	this->setDefaultValues();
 }
 
+Button::Button(std::string text)
+{
+	this->setDefaultValues();
+	this->setText(text);
+}
+
 
 //Destructor
 Button::~Button()
@@ -19,14 +25,16 @@ Button::~Button()
 //Setters
 void Button::setDefaultValues()
 {
-	this->outsideColor = {0, 255, 255, 255};
-	this->insideColor = {255, 0, 255, 255};
-	this->clickColor = {255, 255, 0, 255};
+	this->outsideColor = {46, 52, 54, 255};
+	this->insideColor = {61, 61, 61, 255};
+	this->clickColor = {100, 100, 100, 255};
 	this->rectangle.setColor(outsideColor);
 	this->text.setFont("font/default.ttf", 30);
+	this->text.setColor({0, 0, 0, 255});
 	this->text.setText("Button");
 	this->rectangle.setSize(this->text.getWidth(), this->text.getHeight());
 	this->window == NULL;
+	this->setPosition(0,0);
 	this->showLogs = false;
 }
 
@@ -49,7 +57,24 @@ void Button::setWindow(Window* window)
 
 void Button::setText(string text) { this->text.setText(text); this->rectangle.setSize(this->text.getWidth(), this->text.getHeight()); }
 
-void Button::setPosition(int x, int y) { this->text.setPosition(x, y); this->rectangle.setPosition(x,y); }
+void Button::setPosition(int x, int y) 
+{ 
+	this->text.setPosition(x, y); 
+	this->rectangle.setPosition(x,y); 
+	if(this->showLogs)
+	{
+		if(x > this->window->getWidth() || (x + this->rectangle.getWidth()) < 0)
+		{
+			cout<<"Warning: At Button.setPosition(int x, int y)"<<endl;
+			cout<<"\tAt this X position, the button will not be shown"<<endl;
+		}
+		if(y > this->window->getHeight() || (y + this->rectangle.getHeight()) < 0)
+		{
+			cout<<"Warning: At Button.setPosition(int x, int y)"<<endl;
+			cout<<"\tAt this Y position, the button will not be shown"<<endl;
+		}
+	}
+}
 
 void Button::setSize(int size) { this->text.setFontSize(size); this->rectangle.setSize(this->text.getWidth(), this->text.getHeight()); }
 
@@ -121,6 +146,8 @@ void Button::setTextColor(SDL_Color color)
 
 bool Button::listener()
 {
+
+
 	if(this->window == NULL)
 	{
 		if(this->showLogs)
@@ -130,16 +157,27 @@ bool Button::listener()
 		}
 		return false;
 	}
-	if(this->rectangle.getCursorInside(this->window))
+
+	if(this->rectangle.getCursorInside(this->window))//se cursor estiver dentro do retangulo
 	{
-		if(this->window->getMouseClick())
+		if(this->showLogs)
 		{
-			this->setClickColor();
+			cout<<"Cursor inside button"<<endl;	
+		}
+		
+		if(this->window->getMouseClick())//Se detectar clique do mouse
+		{
+			if(this->showLogs)
+			{
+				cout<<"Button Clicked"<<endl;	
+			}
+			this->setClickColor();//Define a cor do botão pra quando clicado
 			return true;
 		}
 		else
 		{
-			this->setInsideColor();
+			
+			this->setInsideColor();//Define a cor do botão pra quando cursor estiver dentro do botao
 			return false;
 		}
 	}

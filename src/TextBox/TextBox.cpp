@@ -1,5 +1,7 @@
 #include "TextBox.hpp"
 
+bool textInputEnabled = false;
+
 //Constructors
 TextBox::TextBox()
 {
@@ -183,6 +185,11 @@ void TextBox::setY(int y)
 	this->text.setY(y);
 }
 
+void TextBox::setEnterAsCommand(bool x) 
+{
+	this->enterEnabledAsCommand = x;
+}
+
 
 //Commands
 void TextBox::print(Window* window)
@@ -213,27 +220,41 @@ void TextBox::print(Window* window)
 
 bool TextBox::listener(Window* window)
 {
-	if(window->getMouseClick()) // IMPROVE THIS CODE!!!
+	if(window == NULL)
+	{
+		if(this->showLogs)
+		{
+			cout<<"ERROR: At TextBox.listener(Window*)"<<endl;
+			cout<<"\tWindow* == NULL, aborting"<<endl;
+		}
+		return false;
+	}
+
+	if(window->getMouseClick())
 	{
 		if(this->rectangle.getCursorInside(window))
 		{
 			this->editingText = true;
-			//return true;
+			// return true;
 		}	
 		else
 		{
-			SDL_StopTextInput();// POSSIBLE ERROR HERE
+			if(textInputEnabled)
+			{
+				//SDL_StopTextInput();// POSSIBLE ERROR HERE
+				// cout<<"SDL_StopTextInput"<<endl;
+			}
+			textInputEnabled = false;
 			this->editingText =  false;
-			cout<<"SDL_StopTextInput"<<endl;
 			return false;
-			//TODO
 		}
 	}
 
 	//Special Characters
-	if(this->editingText)
+	if(this->editingText)  // AQUI TÁ OK
 	{
-		SDL_StartTextInput();
+		textInputEnabled = true;
+
 		if(window->getKeyDown())
 		{
 			if(window->getKey() == SDLK_BACKSPACE && this->inputText.length() > 0)
@@ -253,7 +274,11 @@ bool TextBox::listener(Window* window)
 					{
 						cout<<"At: TextBox ->  Return Identified"<<endl;
 					}
-					return true;
+					if(this->enterEnabledAsCommand)
+					{
+						return true;
+					}
+					return false;
 				}
 			}
 		}

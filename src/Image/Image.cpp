@@ -7,7 +7,8 @@ using namespace std;
 // Constructors
 Image::Image()
 {
-	cout<<"No parameters passed, setting Default Variables"<<endl;
+	cout<<"Warning At: Image constructor"<<endl;
+	cout<<"\tNo parameters passed, setting Default Variables"<<endl;
 	this->definePNGSupport();
 	this->setDefaultValues();
 }

@@ -4,11 +4,13 @@
 #include "../Rectangle/Rectangle.hpp"
 #include "../Window/Window.hpp"
 
+// bool textInputEnabled = false;
+
 class TextBox
 {
-	public:
+public:
 		//Constructors
-		TextBox();
+	TextBox();
 		TextBox(string path);//Create a TextBox with the font defined on path
 		TextBox(string path, int fontSize);//Create a TextBox with the font defined on path, with the size of fontSize
 		TextBox(int width, int height);//Create a TextBox with width and height defined
@@ -43,6 +45,7 @@ class TextBox
 		void setX(int x);
 		void setY(int y);
 
+		void setEnterAsCommand(bool x);
 
 		void setShowLogs(bool showLogs);//If it receive true, the logs will appear
 		void setLogs(bool showLogs);// A shorter name to setShowLogs(bool showLogs);
@@ -50,7 +53,7 @@ class TextBox
 		//Commands
 		bool listener(Window* window);// Return true if something happens
 		void print(Window* window);//Print the TextBox on window
-	
+
 	private:
 		//Variables
 		Text text;
@@ -61,7 +64,8 @@ class TextBox
 		bool showLogs;
 		bool editingText;
 		bool textEdited;
+		bool enterEnabledAsCommand;
 
 		//Setters
 		void setDefaultValues();//Don't thouch here !!! , method to define the default values, used by TextBox.
-};
+	};

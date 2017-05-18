@@ -36,42 +36,46 @@ public:
 	~Window();
 
 	//Setters
-	bool setSize(unsigned int width, unsigned int height);
-	bool setVisible(bool showWindow);
+	bool setSize(unsigned int width, unsigned int height);//working
+	bool setVisible(bool showWindow);//working
 	bool setDecoration(bool showDecoration);//working
+	bool setBorderLess(bool showDecoration);//working
 	bool setTitle(std::string title);//working
-	bool setDrawColor(SDL_Color color);
-	bool setAutoUpdate(bool autoUpdate);
-	bool setLogs(bool showLogs);
+	bool setDrawColor(SDL_Color color);//working
+	bool setAutoUpdate(bool autoUpdate);//working
+	bool setLogs(bool showLogs);//working
 	bool setFullScreen(bool fullScreen);
-	void setDefaultRenderColor();
+	void setDefaultRenderColor();//working
 	void setResizable(bool resizable);//If true, the window will be resizable
 
 	//Getters
-	unsigned int getWidth();
-	unsigned int getHeight();
+	unsigned int getWidth();//working
+	unsigned int getHeight();//working
 	
-	int getCursorXPosition();
-	int getCursorYPosition();
+	int getCursorXPosition();//working
+	int getCursorYPosition();//working
 
-	bool getEvent();
-	bool getCursorPosition(int *x, int *y);
-	bool getMouseButtonDown();
-	bool getMouseButtonUp();
-	bool getMouseClick();
-	bool getMouseRelease();
-	bool getKeyDown();
-	bool getKeyUp();
-	bool getExit();
-	bool getClose();
+	bool getEvent();//working
+	bool getCursorPosition(int *x, int *y);//working
+	bool getMouseButtonDown();//working
+	bool getMouseButtonUp();//working//working
+	bool getMouseClick();//working//working
+	bool getMouseRelease();//working
+	bool getKeyDown();//working
+	bool getKeyUp();//working
+	bool getExit();//working
+	bool getClose();//working
 
-	SDL_Keycode getKey();
-	SDL_Renderer* getRenderer();
-	SDL_Window* getWindow();
-	SDL_Event getRawEvent();
+	SDL_Keycode getKey();//working
+	SDL_Renderer* getRenderer();//working
+	SDL_Window* getWindow();//working
+	SDL_Event getRawEvent();//working
 
 	//Commands
 	bool upgrade();//Reset Window, destroy the old, create a new window, renderer and other things
 	bool update();//Clear screen and render present things
 	bool render();//Render the present screen, but not clear it before
+
+	//Control General Use Variables
+	// bool textInputEnabled; (USELESS BY NOW)
 };
